@@ -1,0 +1,127 @@
+%start Map1::Start
+%class AppClass
+
+%map Map1
+%%
+// State		Transition		End State		Action(s)
+Start
+{
+                L               Name1            {setk();}
+}
+
+Name1
+{
+                D[ctxt.getk()<20]  nil             {addk();}
+                L[ctxt.getk()<20]  nil             {addk();}
+                Sp              Equal           {}
+                Eq              SName2          {}
+}
+
+Equal
+{
+                Sp              nil             {}
+                Eq              SName2          {}
+}
+
+SName2
+{
+                Sp               nil             {}
+                L                Name2           {setk();}
+}
+
+Name2
+{
+                D[ctxt.getk()<20]  nil          {addk();}
+                L[ctxt.getk()<20]  nil          {addk();}
+                Sp              LBracket        {}
+                LBr             SName3          {}
+}
+
+LBracket
+{
+                Sp              nil             {}
+                LBr             SName3          {}
+}
+
+SName3
+{
+                Sp               nil             {}
+                L                Name3           {setk();}
+                D                Digit           {}
+                RBr              Semicolon       {}
+}
+
+Name3
+{
+                D[ctxt.getk()<20]  nil             {addk();}
+                L[ctxt.getk()<20]  nil             {addk();}
+                Sp               Comma           {}
+                Com              SName3Com       {}
+                RBr              Semicolon       {}
+}
+
+Digit
+{
+                D                nil             {}
+                Sp               Comma           {}
+                Com              SName3Com       {}
+                RBr              Semicolon       {}
+}
+
+Comma
+{
+                Sp               nil             {}
+                Com              SName3Com       {}
+                RBr              Semicolon       {}
+}
+
+SName3Com
+{
+                Sp               nil             {}
+                L                Name3           {setk();}
+                D                Digit           {}
+}
+
+Semicolon
+{
+                Sp              nil             {}
+                Sem             End             {}
+}
+
+End
+{
+                Sp              nil             {}
+                EOS             OK              {Acceptable();}
+}
+
+OK
+{}
+
+Error
+{
+                D               nil             {}
+                L               nil             {}
+                Sp              nil             {}
+                LBr             nil             {}
+                RBr             nil             {}
+                Com             nil             {}
+                Sem             nil             {}
+                Eq              nil             {}
+                Unknown         nil             {}
+                EOS             nil             {Unacceptable();}
+}
+
+Default
+{
+                Unknown         Error           {}
+                D               Error           {}
+                L               Error           {}
+                Sp              Error           {}
+                LBr             Error           {}
+                RBr             Error           {}
+                Com             Error           {}
+                Sem             Error           {}
+                Eq              Error           {}
+}
+
+%%

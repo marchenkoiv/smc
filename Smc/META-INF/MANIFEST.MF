@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: charlesr
+Build-Jdk: 1.8.0_191
+Main-Class: net.sf.smc.Smc
+
